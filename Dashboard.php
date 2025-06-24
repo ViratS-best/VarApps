@@ -96,7 +96,42 @@ include('connect.php');
             .item { padding: 14px 8vw 10px 8vw; }
             .filters { flex-direction: column; align-items: center; gap: 10px; }
         }
+        .hide {
+            display: none;
+        }
+        .search-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 18px 0 8px 0;
+            gap: 10px;
+        }
+
+        .search-wrapper label {
+            font-weight: 500;
+            color: #444;
+            margin-right: 6px;
+            font-size: 1.05em;
+        }
+
+        #search {
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: 1.5px solid #bdbddd;
+            background: #fff;
+            font-size: 1em;
+            transition: border 0.2s, box-shadow 0.2s;
+            box-shadow: 0 2px 8px rgba(106, 106, 214, 0.06);
+            width: 220px;
+        }
+
+        #search:focus {
+            border: 1.5px solid #6a6ad6;
+            outline: none;
+            box-shadow: 0 4px 16px rgba(106, 106, 214, 0.13);
+        }
     </style>
+    <script src="defer.js" defer></script>
 </head>
 <body>
     <h1>VarCart</h1>
@@ -134,9 +169,12 @@ include('connect.php');
             <option value="all">All</option>
         </select>
     </div>
+    <div class="search-wrapper">
+        <label for="search">Search:</label>
+        <input type="search" id="search">
+    </div>
     <div id="currentRange"></div>
-    <div class="items-list"></div>
-    
+    <div class="items-list" data-search></div>
     <script>
 const rangeDisplay = {
     close: "0-5 miles",
