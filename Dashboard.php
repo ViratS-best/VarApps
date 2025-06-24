@@ -100,6 +100,7 @@ include('connect.php');
 </head>
 <body>
     <h1>VarCart</h1>
+    <a href="logout.php">Logout</a>
     <div class="filters">
         <label for="Distance">Range</label>
         <select id="Distance">
@@ -134,104 +135,106 @@ include('connect.php');
         </select>
     </div>
     <div id="currentRange"></div>
-    <div class="items-list">
-        <div class="item" id="4" data-range="close" data-category="food" data-price-value="25">
-            <div class="item-title">Fresh Apples</div>
-            <div class="item-meta">Category: Food | Range: 0-5 miles</div>
-            <div class="item-price">$25</div>
-            Locally grown apples, crisp and sweet.
-        </div>
-        <div class="item" id="7" data-range="medium" data-category="electronics" data-price-value="80">
-            <div class="item-title">Bluetooth Headphones</div>
-            <div class="item-meta">Category: Electronics | Range: 5-15 miles</div>
-            <div class="item-price">$80</div>
-            Wireless headphones with noise cancellation.
-        </div>
-        <div class="item" id="17" data-range="far" data-category="clothing" data-price-value="40">
-            <div class="item-title">Denim Jacket</div>
-            <div class="item-meta">Category: Clothing | Range: 15+ miles</div>
-            <div class="item-price">$40</div>
-            Stylish denim jacket for all seasons.
-        </div>
-        <div class="item" id="6" data-range="medium" data-category="home" data-price-value="60">
-            <div class="item-title">Table Lamp</div>
-            <div class="item-meta">Category: Home | Range: 5-15 miles</div>
-            <div class="item-price">$60</div>
-            Modern LED table lamp with adjustable brightness.
-        </div>
-        <div class="item" id="3" data-range="close" data-category="toys" data-price-value="15">
-            <div class="item-title">Building Blocks Set</div>
-            <div class="item-meta">Category: Toys | Range: 0-5 miles</div>
-            <div class="item-price">$15</div>
-            Creative building blocks for kids aged 3+.
-        </div>
-        <div class="item" id="10" data-range="medium" data-category="books" data-price-value="22">
-            <div class="item-title">Mystery Novel</div>
-            <div class="item-meta">Category: Books | Range: 5-15 miles</div>
-            <div class="item-price">$22</div>
-            A thrilling mystery novel by a bestselling author.
-        </div>
-        <div class="item" id="11" data-range="far" data-category="sports" data-price-value="55">
-            <div class="item-title">Yoga Mat</div>
-            <div class="item-meta">Category: Sports | Range: 15+ miles</div>
-            <div class="item-price">$55</div>
-            Non-slip yoga mat for all fitness levels.
-        </div>
-        <a href="logout.php">Logout</a>
-    </div>
+    <div class="items-list"></div>
+    
     <script>
-        // Mapping of value to display text
-        const rangeDisplay = {
-            close: "0-5 miles",
-            medium: "5-15 miles",
-            far: "15+ miles",
-            all: "All"
-        };
+const rangeDisplay = {
+    close: "0-5 miles",
+    medium: "5-15 miles",
+    far: "15+ miles",
+    all: "All"
+};
 
-        function filterItems() {
-            const selectedRange = document.getElementById('Distance').value;
-            const selectedCategory = document.getElementById('Category').value;
-            const selectedPrice = document.getElementById('Price').value;
+function filterItems() {
+    const selectedRange = document.getElementById('Distance').value;
+    const selectedCategory = document.getElementById('Category').value;
+    const selectedPrice = document.getElementById('Price').value;
 
-            // Get all items as array
-            const items = Array.from(document.querySelectorAll('.item'));
+    const items = Array.from(document.querySelectorAll('.item'));
 
-            // Filter items
-            let filtered = items.filter(p => {
-                const matchRange = (selectedRange === 'all' || p.dataset.range === selectedRange);
-                const matchCategory = (selectedCategory === 'all' || p.dataset.category === selectedCategory);
-                return matchRange && matchCategory;
-            });
+    let filtered = items.filter(p => {
+        const matchRange = (selectedRange === 'all' || p.dataset.range === selectedRange);
+        const matchCategory = (selectedCategory === 'all' || p.dataset.category === selectedCategory);
+        return matchRange && matchCategory;
+    });
 
-            // Sort items if needed
-            if (selectedPrice === 'low') {
-                filtered.sort((a, b) => Number(a.dataset.priceValue) - Number(b.dataset.priceValue));
-            } else if (selectedPrice === 'high') {
-                filtered.sort((a, b) => Number(b.dataset.priceValue) - Number(a.dataset.priceValue));
+    if (selectedPrice === 'low') {
+        filtered.sort((a, b) => Number(a.dataset.priceValue) - Number(b.dataset.priceValue));
+    } else if (selectedPrice === 'high') {
+        filtered.sort((a, b) => Number(b.dataset.priceValue) - Number(a.dataset.priceValue));
+    }
+
+    items.forEach(p => p.style.display = 'none');
+    const parent = document.querySelector('.items-list');
+    filtered.forEach(p => {
+        p.style.display = '';
+        parent.appendChild(p);
+    });
+
+    document.getElementById('currentRange').textContent =
+        "Current Range: " + rangeDisplay[selectedRange] +
+        " | Category: " + (selectedCategory === 'all' ? "All" : selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)) +
+        " | Price: " + (selectedPrice === 'all' ? "All" : (selectedPrice === 'low' ? "Low to High" : "High to Low"));
+}
+
+// Fetch and display items from datagetter.php
+document.addEventListener('DOMContentLoaded', function() {
+    fetch('datagetter.php')
+        .then(res => res.json())
+        .then(data => {
+            const itemsList = document.querySelector('.items-list');
+            itemsList.innerHTML = ''; // Clear any existing items
+
+            // Helper to assign categories/ranges/prices for mock data
+            function assignAttributes(div, category, range, price) {
+                div.dataset.category = category;
+                div.dataset.range = range;
+                div.dataset.priceValue = price;
             }
 
-            // Hide all items first
-            items.forEach(p => p.style.display = 'none');
-
-            // Show filtered and sorted items in order
-            const parent = document.querySelector('.items-list');
-            filtered.forEach(p => {
-                p.style.display = '';
-                parent.appendChild(p);
+            // Walmart
+            data.walmart.forEach((item, idx) => {
+                const div = document.createElement('div');
+                div.className = 'item';
+                div.innerHTML = `
+                    <div class="item-title">${item.name}</div>
+                    <div class="item-meta">Category: ${capitalize(item.category)} | Range: ${rangeDisplay[item.range]}</div>
+                    <div class="item-price">$${item.salePrice}</div>
+                    <img src="${item.thumbnailImage}" style="max-width:120px;display:block;margin:8px 0;">
+                    <a href="${item.productUrl}" target="_blank">View on Walmart</a>
+                `;
+                assignAttributes(div, item.category, item.range, item.salePrice);
+                itemsList.appendChild(div);
             });
 
-            document.getElementById('currentRange').textContent =
-                "Current Range: " + rangeDisplay[selectedRange] +
-                " | Category: " + (selectedCategory === 'all' ? "All" : selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)) +
-                " | Price: " + (selectedPrice === 'all' ? "All" : (selectedPrice === 'low' ? "Low to High" : "High to Low"));
-        }
+            // Amazon
+            data.amazon.forEach((item, idx) => {
+                const div = document.createElement('div');
+                div.className = 'item';
+                div.innerHTML = `
+                    <div class="item-title">${item.title}</div>
+                    <div class="item-meta">Category: ${capitalize(item.category)} | Range: ${rangeDisplay[item.range]}</div>
+                    <div class="item-price">${item.price}</div>
+                    <img src="${item.image}" style="max-width:120px;display:block;margin:8px 0;">
+                    <a href="${item.url}" target="_blank">View on Amazon</a>
+                `;
+                let priceValue = Number(item.price.replace(/[^0-9.]/g, '')) || 0;
+                assignAttributes(div, item.category, item.range, priceValue);
+                itemsList.appendChild(div);
+            });
 
-        document.getElementById('Distance').addEventListener('change', filterItems);
-        document.getElementById('Category').addEventListener('change', filterItems);
-        document.getElementById('Price').addEventListener('change', filterItems);
+            filterItems(); // Apply filters on load
+        });
 
-        // Filter on page load
-        filterItems();
-    </script>
+    document.getElementById('Distance').addEventListener('change', filterItems);
+    document.getElementById('Category').addEventListener('change', filterItems);
+    document.getElementById('Price').addEventListener('change', filterItems);
+});
+
+// Helper function to capitalize category
+function capitalize(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
+</script>
 </body>
 </html>
