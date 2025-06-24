@@ -276,6 +276,8 @@ function capitalize(str) {
 </script>
 </body>
 </html>
-
-<!-- datagetter.php
+<!-- main dashboard
+This file serves as the main dashboard for VarCart, allowing users to filter and search for items based on distance, category, and price. It dynamically fetches data from `datagetter.php` and displays it in a user-friendly format. The filters and search functionality enhance the user experience by allowing easy navigation through available products.
+It includes a responsive design that adapts to different screen sizes, ensuring accessibility on both desktop and mobile devices. The use of modern CSS styles provides a clean and visually appealing interface, while JavaScript handles the dynamic aspects of filtering and displaying items based on user selections.
+This file is essential for the core functionality of VarCart, providing a seamless shopping experience for users. It integrates with the backend to fetch real-time data and presents it in an organized manner, making it easy for users to find and view products they are interested in. 
 -->
