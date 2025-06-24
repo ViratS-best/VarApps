@@ -276,3 +276,6 @@ function capitalize(str) {
 </script>
 </body>
 </html>
+
+<!-- datagetter.php
+-->
