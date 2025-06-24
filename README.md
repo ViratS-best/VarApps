@@ -1,5 +1,5 @@
 # VarCart
-
+THIS PRODJECT USED HELP FROM AI!
 ---
 
 Have you ever found yourself bouncing between multiple online stores, trying to keep track of products you're interested in, only to lose sight of them or forget where you saw them? **VarCart solves this common online shopping frustration by bringing all your desired products into one centralized location.**
