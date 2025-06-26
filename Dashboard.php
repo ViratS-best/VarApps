@@ -1,6 +1,17 @@
 <?php
 session_start();
+header("Expires: Tue, 01 Jan 2000 00:00:00 GMT");
+header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+if (!isset($_SESSION['email'])) {
+    header("Location: login.php");
+    exit();
+}
+
 include('connect.php');
+$cart_count = isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0;
 ?>
 
 
@@ -130,51 +141,154 @@ include('connect.php');
             outline: none;
             box-shadow: 0 4px 16px rgba(106, 106, 214, 0.13);
         }
+
+        /* Navigation styles */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #fff;
+            padding: 12px 24px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #3a3a60;
+            font-weight: 500;
+            margin-right: 16px;
+        }
+
+        nav a.cart-icon {
+            position: relative;
+        }
+
+        nav a.cart-icon .cart-item-count {
+            position: absolute;
+            top: -6px;
+            right: -10px;
+            background: #e63946;
+            color: #fff;
+            border-radius: 10px;
+            padding: 2px 6px;
+            font-size: 0.8em;
+        }
+
+        /* Navigation toggle for mobile */
+        .nav-toggle {
+            display: none;
+        }
+
+        .nav-toggle-label {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .nav-toggle-label span {
+            height: 3px;
+            width: 25px;
+            background: #3a3a60;
+            margin-bottom: 4px;
+            transition: all 0.3s;
+        }
+
+        #nav-toggle:checked + .nav-toggle-label span {
+            background: transparent;
+        }
+
+        #nav-toggle:checked + .nav-toggle-label span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        #nav-toggle:checked + .nav-toggle-label span:nth-child(2) {
+            opacity: 0;
+        }
+
+        #nav-toggle:checked + .nav-toggle-label span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        @media (max-width: 700px) {
+            nav {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            nav a {
+                margin: 8px 0;
+            }
+
+            .nav-toggle {
+                display: block;
+            }
+
+            .nav-toggle-label {
+                display: flex;
+            }
+        }
     </style>
     <script src="defer.js" defer></script>
+    <link rel="stylesheet" href="cart.css">
+    <link
+    href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+    rel="stylesheet"
+/>
 </head>
 <body>
-    <h1>VarCart</h1>
-    <a href="logout.php">Logout</a>
-    <div class="filters">
-        <label for="Distance">Range</label>
-        <select id="Distance">
-            <option value="close">0-5 miles</option>
-            <option value="medium">5-15 miles</option>
-            <option value="far">15+</option>
-            <option value="all">All</option>
-        </select>
-        <label for="Category">Category</label>
-        <select id="Category">
-            <option value="all">All</option>
-            <option value="food">Food</option>
-            <option value="clothing">Clothing</option>
-            <option value="electronics">Electronics</option>
-            <option value="home">Home</option>
-            <option value="toys">Toys</option>
-            <option value="books">Books</option>
-            <option value="sports">Sports</option>
-            <option value="health">Health</option>
-            <option value="beauty">Beauty</option>
-            <option value="automotive">Automotive</option>
-            <option value="garden">Garden</option>
-            <option value="pets">Pets</option>
-            <option value="office">Office</option>
-            <option value="music">Music</option>
-        </select>
-        <label for="Price">Price</label>
-        <select id="Price">
-            <option value="low">Low to High</option>
-            <option value="high">High to Low</option>
-            <option value="all">All</option>
-        </select>
+    <nav class="navbar">
+        <a href="Dashboard.php" class="logo">VarCart</a>
+        <div class="nav-links">
+            <a href="index.php">Home</a>
+            <a href="Dashboard.php">Shop</a>
+            <a href="cart.php" class="cart-icon">
+                <i class="ri-shopping-bag-line"></i>
+                <span class="cart-icon-count"><?php echo $cart_count; ?></span>
+            </a>
+            <a href="logout.php" class="logout-btn">Logout</a>
+        </div>
+    </nav>
+    <div class="main-content">
+        <div class="filters">
+            <label for="Distance">Range</label>
+            <select id="Distance">
+                <option value="close">0-5 miles</option>
+                <option value="medium">5-15 miles</option>
+                <option value="far">15+</option>
+                <option value="all">All</option>
+            </select>
+            <label for="Category">Category</label>
+            <select id="Category">
+                <option value="all">All</option>
+                <option value="food">Food</option>
+                <option value="clothing">Clothing</option>
+                <option value="electronics">Electronics</option>
+                <option value="home">Home</option>
+                <option value="toys">Toys</option>
+                <option value="books">Books</option>
+                <option value="sports">Sports</option>
+                <option value="health">Health</option>
+                <option value="beauty">Beauty</option>
+                <option value="automotive">Automotive</option>
+                <option value="garden">Garden</option>
+                <option value="pets">Pets</option>
+                <option value="office">Office</option>
+                <option value="music">Music</option>
+            </select>
+            <label for="Price">Price</label>
+            <select id="Price">
+                <option value="low">Low to High</option>
+                <option value="high">High to Low</option>
+                <option value="all">All</option>
+            </select>
+        </div>
+        <div class="search-wrapper">
+            <label for="search">Search:</label>
+            <input type="search" id="search">
+        </div>
+        <div id="currentRange"></div>
+        <div class="items-list" data-search></div>
     </div>
-    <div class="search-wrapper">
-        <label for="search">Search:</label>
-        <input type="search" id="search">
-    </div>
-    <div id="currentRange"></div>
-    <div class="items-list" data-search></div>
     <script>
 const rangeDisplay = {
     close: "0-5 miles",
@@ -235,11 +349,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 const div = document.createElement('div');
                 div.className = 'item';
                 div.innerHTML = `
-                    <div class="item-title">${item.name}</div>
-                    <div class="item-meta">Category: ${capitalize(item.category)} | Range: ${rangeDisplay[item.range]}</div>
-                    <div class="item-price">$${item.salePrice}</div>
-                    <img src="${item.thumbnailImage}" style="max-width:120px;display:block;margin:8px 0;">
-                    <a href="${item.productUrl}" target="_blank">View on Walmart</a>
+                    <a href="product-detail.php?id=${item.id}" style="text-decoration:none;color:inherit;">
+                        <div class="item-title">${item.name}</div>
+                        <div class="item-meta">Category: ${capitalize(item.category)} | Range: ${rangeDisplay[item.range]}</div>
+                        <div class="item-price">$${item.salePrice}</div>
+                        <img src="${item.thumbnailImage}" style="max-width:120px;display:block;margin:8px 0;">
+                        <div style="color:#00abf0;font-size:0.95em;">View Details</div>
+                    </a>
                 `;
                 assignAttributes(div, item.category, item.range, item.salePrice);
                 itemsList.appendChild(div);
@@ -250,11 +366,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 const div = document.createElement('div');
                 div.className = 'item';
                 div.innerHTML = `
-                    <div class="item-title">${item.title}</div>
-                    <div class="item-meta">Category: ${capitalize(item.category)} | Range: ${rangeDisplay[item.range]}</div>
-                    <div class="item-price">${item.price}</div>
-                    <img src="${item.image}" style="max-width:120px;display:block;margin:8px 0;">
-                    <a href="${item.url}" target="_blank">View on Amazon</a>
+                    <a href="product-detail.php?id=${item.id}" style="text-decoration:none;color:inherit;">
+                        <div class="item-title">${item.title}</div>
+                        <div class="item-meta">Category: ${capitalize(item.category)} | Range: ${rangeDisplay[item.range]}</div>
+                        <div class="item-price">${item.price}</div>
+                        <img src="${item.image}" style="max-width:120px;display:block;margin:8px 0;">
+                        <div style="color:#00abf0;font-size:0.95em;">View Details</div>
+                    </a>
                 `;
                 let priceValue = Number(item.price.replace(/[^0-9.]/g, '')) || 0;
                 assignAttributes(div, item.category, item.range, priceValue);
@@ -273,6 +391,12 @@ document.addEventListener('DOMContentLoaded', function() {
 function capitalize(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
 }
+
+window.addEventListener('pageshow', function(event) {
+    if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+        window.location.reload(true);
+    }
+});
 </script>
 </body>
 </html>
