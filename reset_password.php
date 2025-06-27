@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && empty($error)) {
 <html>
 <head>
     <title>Reset Password</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <div class="container">
@@ -60,5 +60,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && empty($error)) {
         <input type="submit" class="btn" value="Reset Password">
     </form>
 </div>
+<script src="theme.js"></script>
 </body>
 </html>

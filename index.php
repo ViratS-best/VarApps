@@ -16,6 +16,7 @@
             <span></span>
         </label>
         <nav class="navbar">
+            <button id="theme-toggle" class="theme-toggle">🌙 Dark/Light</button>
             <a href="#">Home</a>
             <a href="login.php">Shop</a>
             <a href="https://github.com/ViratS-best/VarCart/blob/main/README.md">About</a>
@@ -32,11 +33,10 @@
                 <h3>Your one-stop solution!</h3>
                 <p>VarCart is a versatile e-commerce platform designed to simplify your online shopping experience. Shopping has never been easier!
                     You add items to your cart, and we direct you to the respective websites for checkout! Now you can shop from multiple sites without the hassle of managing multiple carts.</p>
-                <div class="btn-box">
-                    <a href="login.php" class="btn-box">Get Started</a>
-                </div>
+                <a href="login.php" class="btn-box">Get Started</a>
             </div>
         </section>
     </div>
+   <script src="theme.js"></script>
 </body>
 </html>
