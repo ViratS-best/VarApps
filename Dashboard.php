@@ -27,7 +27,6 @@ $cart_count = isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0;
     <title>VarCart</title>
     <link rel="stylesheet" href="styles.css">
     <script src="defer.js" defer></script>
-    <link rel="stylesheet" href="cart.css">
     <link
     href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
     rel="stylesheet"

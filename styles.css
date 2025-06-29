@@ -1,5 +1,6 @@
 /* --- Google Fonts --- */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
 
 /* --- Reset and Base --- */
 * {
@@ -16,62 +17,112 @@
     --card: #fff;
     --accent: #00abf0;
     --navbar-bg: #fff;
+    --secondary-text: #666;
+    --price-color: #2d7a2d;
+    --form-icon-color: #6a6ad6;
+    --input-border: #bdbddd;
+    --input-focus-border: #6a6ad6;
+    --input-bg-focus: #f7f7fa;
+    --btn-shadow: rgba(60,60,100,0.06);
+    --box-shadow-light: rgba(0,0,0,0.04);
+    --box-shadow-medium: rgba(60,60,100,0.13);
+    --box-shadow-hover: rgba(60,60,100,0.18);
+    --header-mobile-bg: #fff;
 }
 body.light-mode {
     --bg: #f6f8fa;
     --text: #222;
     --card: #fff;
     --navbar-bg: #fff;
+    --secondary-text: #666;
+    --price-color: #2d7a2d;
+    --form-icon-color: #6a6ad6;
+    --input-border: #bdbddd;
+    --input-focus-border: #6a6ad6;
+    --input-bg-focus: #f7f7fa;
+    --btn-shadow: rgba(60,60,100,0.06);
+    --box-shadow-light: rgba(0,0,0,0.04);
+    --box-shadow-medium: rgba(60,60,100,0.13);
+    --box-shadow-hover: rgba(60,60,100,0.18);
+    --header-mobile-bg: #fff;
 }
 body.dark-mode {
     --bg: #081b29;
     --text: #ededed;
     --card: #112e42;
     --navbar-bg: #112e42;
+    --secondary-text: #a0a0a0;
+    --price-color: #4CAF50;
+    --form-icon-color: #8f94fb;
+    --input-border: #2c4d6a;
+    --input-focus-border: #8f94fb;
+    --input-bg-focus: #0d283c;
+    --btn-shadow: rgba(0,0,0,0.1);
+    --box-shadow-light: rgba(0,0,0,0.1);
+    --box-shadow-medium: rgba(0,0,0,0.18);
+    --box-shadow-hover: rgba(0,0,0,0.25);
+    --header-mobile-bg: #112e42;
 }
-body, html {
-    background: var(--bg) !important;
-    color: var(--text) !important;
+body {
+    background: var(--bg);
+    color: var(--text);
     transition: background 0.2s, color 0.2s;
     min-height: 100vh;
 }
 
-/* --- Header/Navbar --- */
+/* --- Header/Navbar (Unified Styles) --- */
 .header, .navbar {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    padding: 20px 10%;
-    background: var(--navbar-bg) !important;
+    padding: 20px 9%;
+    background: var(--navbar-bg);
     display: flex;
     justify-content: space-between;
     align-items: center;
     z-index: 100;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+    box-shadow: 0 2px 10px var(--box-shadow-light);
+    transition: background 0.2s, box-shadow 0.2s;
 }
+body.dark-mode .header,
+body.dark-mode .navbar {
+    box-shadow: 0 2px 18px 0 #00abf0;
+}
+
 .logo {
     font-size: 25px;
     color: var(--text);
     text-decoration: none;
     font-weight: 600;
 }
+/* Ensure nav-links are always a row by default */
+.nav-links {
+    display: flex; /* Make it a flex container */
+    align-items: center; /* Align items vertically */
+    gap: 24px; /* Spacing between nav items, adjusted from margin-left */
+}
 .navbar a, .nav-links a {
-    font-size: 18px;
+    font-size: 17px;
     color: var(--text);
     text-decoration: none;
     font-weight: 500;
-    margin-left: 35px;
-    transition: .3s;
+    /* margin-left: 24px; Removed as gap on parent takes over */
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: background 0.2s, color 0.2s;
 }
 .navbar a:hover, .nav-links a:hover {
-    color: #00abf0;
+    background: var(--accent);
+    color: #fff;
 }
+
 .cart-icon {
     position: relative;
     font-size: 22px;
     display: flex;
     align-items: center;
+    color: var(--text);
 }
 .cart-icon-count {
     position: absolute;
@@ -101,7 +152,7 @@ body, html {
     background: #008bbd;
 }
 
-/* --- Hamburger --- */
+/* --- Hamburger Styles --- */
 .nav-toggle {
     display: none;
 }
@@ -124,42 +175,44 @@ body, html {
     border-radius: 2px;
     transition: 0.3s;
 }
+
 @media (max-width: 800px) {
     .header, .navbar {
         padding: 16px 4vw;
     }
-    .nav-links {
-        gap: 14px;
-    }
+    /* Removed .nav-links gap here as it's handled by default flex properties */
 }
 @media (max-width: 700px) {
     .nav-toggle-label {
         display: flex;
     }
-    .navbar, .nav-links {
-        position: absolute;
+    .navbar .nav-links,
+    .nav-links {
+        position: fixed;
         top: 60px;
         right: 4vw;
-        background: var(--card);
-        flex-direction: column;
+        background: var(--header-mobile-bg);
+        flex-direction: column; /* This is where it becomes top-down for mobile */
         align-items: flex-start;
-        width: 180px;
+        width: 170px;
         padding: 18px 0 18px 18px;
         border-radius: 10px;
-        box-shadow: 0 6px 24px rgba(0,0,0,0.18);
+        box-shadow: 0 6px 24px var(--box-shadow-medium);
         opacity: 0;
         pointer-events: none;
         transform: translateY(-10px);
         transition: opacity 0.3s, transform 0.3s;
         z-index: 150;
+        gap: 0; /* Remove gap for vertical layout */
     }
-    .navbar a, .nav-links a {
-        margin: 10px 0;
-        font-size: 17px;
+    .navbar .nav-links a,
+    .nav-links a {
+        margin: 10px 0; /* Provide vertical spacing */
+        font-size: 16px;
         width: 100%;
         padding: 6px 0;
     }
-    .nav-toggle:checked ~ .navbar,
+    .nav-toggle:checked ~ .navbar .nav-links,
     .nav-toggle:checked ~ .nav-links {
         opacity: 1;
         pointer-events: auto;
@@ -198,13 +251,32 @@ body, html {
     background: #008bbd;
 }
 
+/* --- Content Spacing below fixed Navbar --- */
+/* Add top margin to main content containers based on navbar height */
+.main-content,
+.hero-row,
+.cart-list,
+.product-detail { /* Removed .container from here as auth-bg handles it */
+    margin-top: 90px;
+    position: relative;
+    z-index: 1;
+}
+/* Specific adjustment for login/register container which doesn't have fixed navbar */
+body.auth-bg .container {
+    margin-top: 48px;
+}
+/* Adjust general container margin if it's used on pages WITH a navbar */
+.container:not(.auth-container) { /* Assuming you don't use .container directly for main dashboard content */
+    margin-top: 90px; /* Apply this if generic .container is used right below navbar */
+}
+
+
 /* --- Hero Section --- */
 .hero-row {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 48px;
-    margin-top: 90px;
     flex-wrap: wrap;
     padding: 32px 2vw;
     background: linear-gradient(120deg, #f6f8fa 0%, #e0e7ff 100%);
@@ -213,7 +285,7 @@ body, html {
 }
 body.dark-mode .hero-row {
     background: linear-gradient(120deg, #081b29 0%, #112e42 100%);
-    box-shadow: 0 8px 32px 0 rgba(0,0,0,0.18);
+    box-shadow: 0 8px 32px 0 var(--box-shadow-medium);
 }
 .hero-img {
     width: 260px;
@@ -285,7 +357,10 @@ body.dark-mode .hero-row {
     display: flex;
     justify-content: center;
     gap: 24px;
-    margin: 24px 0 8px 0;
+    margin: 24px auto 8px auto; /* Centering for filters */
+    padding-top: 20px; /* Added padding to push filters below the navbar */
+    flex-wrap: wrap;
+    max-width: 600px; /* Constrain width to align with items-list */
 }
 .filters label {
     font-weight: 500;
@@ -295,14 +370,14 @@ body.dark-mode .hero-row {
 select {
     padding: 6px 12px;
     border-radius: 6px;
-    border: 1px solid #bdbddd;
+    border: 1px solid var(--input-border);
     background: var(--card);
     color: var(--text);
     font-size: 1em;
     transition: border 0.2s, background 0.2s, color 0.2s;
 }
 select:focus {
-    border: 1.5px solid #6a6ad6;
+    border: 1.5px solid var(--input-focus-border);
     outline: none;
 }
 #currentRange {
@@ -318,17 +393,18 @@ select:focus {
 }
 .item {
     background: var(--card);
-    border: 1.5px solid #d1d1e0;
+    border: 1.5px solid var(--input-border);
     border-radius: 10px;
     margin: 18px 0;
     padding: 18px 22px 12px 22px;
-    box-shadow: 0 2px 8px 0 rgba(60,60,100,0.06);
+    box-shadow: 0 2px 8px 0 var(--btn-shadow);
     transition: box-shadow 0.2s, border 0.2s, background 0.2s, color 0.2s;
     position: relative;
+    color: var(--text);
 }
 .item:hover {
-    border: 1.5px solid #6a6ad6;
-    box-shadow: 0 4px 16px 0 rgba(60,60,100,0.13);
+    border: 1.5px solid var(--input-focus-border);
+    box-shadow: 0 4px 16px 0 var(--box-shadow-medium);
 }
 .item-title {
     font-size: 1.13em;
@@ -338,12 +414,12 @@ select:focus {
 }
 .item-meta {
     font-size: 0.98em;
-    color: #666;
+    color: var(--secondary-text);
     margin-bottom: 4px;
 }
 .item-price {
     font-size: 1.08em;
-    color: #2d7a2d;
+    color: var(--price-color);
     font-weight: 500;
     position: absolute;
     right: 22px;
@@ -356,6 +432,7 @@ select:focus {
     align-items: center;
     margin: 18px 0 8px 0;
     gap: 10px;
+    flex-wrap: wrap;
 }
 .search-wrapper label {
     font-weight: 500;
@@ -366,33 +443,33 @@ select:focus {
 #search {
     padding: 8px 16px;
     border-radius: 8px;
-    border: 1.5px solid #bdbddd;
+    border: 1.5px solid var(--input-border);
     background: var(--card);
     color: var(--text);
     font-size: 1em;
     transition: border 0.2s, box-shadow 0.2s, background 0.2s, color 0.2s;
-    box-shadow: 0 2px 8px rgba(106, 106, 214, 0.06);
+    box-shadow: 0 2px 8px var(--btn-shadow);
     width: 220px;
 }
 #search:focus {
-    border: 1.5px solid #6a6ad6;
+    border: 1.5px solid var(--input-focus-border);
     outline: none;
-    box-shadow: 0 4px 16px rgba(106, 106, 214, 0.13);
+    box-shadow: 0 4px 16px var(--box-shadow-medium);
 }
 @media (max-width: 700px) {
     .items-list { max-width: 98vw; }
     .item { padding: 14px 8vw 10px 8vw; }
-    .filters { flex-direction: column; align-items: center; gap: 10px; }
+    .filters { flex-direction: column; align-items: center; gap: 10px; padding-top: 10px; } /* Smaller padding for mobile */
     .search-wrapper { flex-direction: column; gap: 6px; }
 }
 
 /* --- Cart Page Styles --- */
 .cart-list {
     max-width: 540px;
-    margin: 80px auto 0 auto;
+    margin: 90px auto 0 auto;
     background: var(--card);
     border-radius: 16px;
-    box-shadow: 0 4px 24px rgba(60,60,100,0.13);
+    box-shadow: 0 4px 24px var(--box-shadow-medium);
     padding: 36px 28px 28px 28px;
 }
 .cart-list h2 {
@@ -405,9 +482,10 @@ select:focus {
     display: flex;
     align-items: center;
     gap: 18px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--input-border);
     padding: 18px 0;
     transition: background 0.2s;
+    color: var(--text);
 }
 .cart-item:last-child { border-bottom: none; }
 .cart-item img {
@@ -418,18 +496,22 @@ select:focus {
     background: #f9f9f9;
     box-shadow: 0 2px 8px rgba(0,0,0,0.07);
 }
+body.dark-mode .cart-item img {
+    background: #0d283c;
+}
+
 .cart-item-title {
     font-weight: 600;
     color: var(--text);
     font-size: 1.08em;
 }
 .cart-item-meta {
-    color: #666;
+    color: var(--secondary-text);
     font-size: 0.98em;
     margin-bottom: 4px;
 }
 .cart-item-price {
-    color: #2d7a2d;
+    color: var(--price-color);
     font-weight: bold;
     font-size: 1.08em;
 }
@@ -448,14 +530,14 @@ select:focus {
 .remove-btn:hover { background: #b71c1c; }
 .empty {
     text-align: center;
-    color: #888;
+    color: var(--secondary-text);
     margin: 40px 0;
     font-size: 1.1em;
 }
 .back-link {
     display: block;
     margin-top: 32px;
-    color: #00abf0;
+    color: var(--accent);
     text-decoration: underline;
     font-size: 1em;
     text-align: center;
@@ -489,12 +571,13 @@ select:focus {
 /* --- Product Detail Page Styles --- */
 .product-detail {
     max-width: 420px;
-    margin: 80px auto 0 auto;
+    margin: 90px auto 0 auto;
     background: var(--card);
     border-radius: 16px;
-    box-shadow: 0 4px 24px rgba(60,60,100,0.13);
+    box-shadow: 0 4px 24px var(--box-shadow-medium);
     padding: 36px 28px 28px 28px;
     text-align: center;
+    color: var(--text);
 }
 .product-detail img {
     max-width: 220px;
@@ -503,18 +586,22 @@ select:focus {
     box-shadow: 0 2px 12px rgba(0,0,0,0.08);
     background: #f9f9f9;
 }
+body.dark-mode .product-detail img {
+    background: #0d283c;
+}
+
 .product-detail h2 {
     color: var(--text);
     margin-bottom: 10px;
     font-size: 1.5em;
 }
 .product-detail .meta {
-    color: #666;
+    color: var(--secondary-text);
     font-size: 1em;
     margin-bottom: 12px;
 }
 .product-detail .price {
-    color: #2d7a2d;
+    color: var(--price-color);
     font-size: 1.3em;
     font-weight: bold;
     margin-bottom: 18px;
@@ -540,7 +627,7 @@ select:focus {
 .product-detail .back-link {
     display: block;
     margin-top: 24px;
-    color: #00abf0;
+    color: var(--accent);
     text-decoration: underline;
     font-size: 1em;
     transition: color 0.2s;
@@ -557,30 +644,34 @@ select:focus {
 
 /* --- Auth Forms (Login/Register/Forgot/Reset) --- */
 body.auth-bg {
-    background: #c9d6ff;
     background: linear-gradient(to right, #e2e2e2, #c9d6ff);
     min-height: 100vh;
 }
+body.dark-mode.auth-bg {
+    background: linear-gradient(to right, #0a202d, #06151f);
+}
+
 body.auth-bg .container {
     background: transparent !important;
     box-shadow: none !important;
 }
 .container {
-    background: var(--card, #fff);
+    background: var(--card);
     width: 100%;
     max-width: 430px;
     padding: 2.2rem 1.5rem 1.5rem 1.5rem;
     min-height: 420px;
     margin: 48px auto;
     border-radius: 18px;
-    box-shadow: 0 10px 32px rgba(60,60,100,0.13);
+    box-shadow: 0 10px 32px var(--box-shadow-medium);
     display: flex;
     flex-direction: column;
     justify-content: center;
-    transition: box-shadow 0.2s;
+    transition: box-shadow 0.2s, background 0.2s;
+    color: var(--text);
 }
 .container:hover {
-    box-shadow: 0 16px 40px rgba(60,60,100,0.18);
+    box-shadow: 0 16px 40px var(--box-shadow-hover);
 }
 form {
     margin: 0 1.2rem;
@@ -613,31 +704,31 @@ input {
     left: 0.5rem;
     top: 50%;
     transform: translateY(-50%);
-    color: #6a6ad6;
+    color: var(--form-icon-color);
     font-size: 1.1em;
     pointer-events: none;
     transition: color 0.2s;
 }
 .input-group input {
-    color: #222;
+    color: var(--text);
     width: 100%;
     background-color: transparent;
     border: none;
-    border-bottom: 2px solid #bdbddd;
+    border-bottom: 2px solid var(--input-border);
     padding: 0.9rem 0.5rem 0.9rem 2.2rem;
     font-size: 1.08em;
     border-radius: 0;
-    transition: border-color 0.2s;
+    transition: border-color 0.2s, background 0.2s;
 }
 .input-group input:focus {
-    border-bottom: 2.5px solid #6a6ad6;
-    background: #f7f7fa;
+    border-bottom: 2.5px solid var(--input-focus-border);
+    background: var(--input-bg-focus);
 }
 .input-group input::placeholder {
     color: transparent;
 }
 .input-group label {
-    color: #757575;
+    color: var(--secondary-text);
     position: absolute;
     left: 2.2rem;
     top: 50%;
@@ -652,8 +743,8 @@ input {
     top: -0.9em;
     left: 1.8rem;
     font-size: 0.88em;
-    color: #6a6ad6;
-    background: #fff;
+    color: var(--form-icon-color);
+    background: var(--card);
     padding: 0 4px;
 }
 .recover {
@@ -685,7 +776,7 @@ input {
     margin-top: 8px;
     margin-bottom: 10px;
     transition: background 0.2s, box-shadow 0.2s;
-    box-shadow: 0 2px 8px 0 rgba(60,60,100,0.06);
+    box-shadow: 0 2px 8px 0 var(--btn-shadow);
 }
 .btn:hover {
     background: linear-gradient(90deg, #5a5ad6 60%, #6a6ad6 100%);
@@ -694,7 +785,7 @@ input {
     font-size: 1.08rem;
     margin-top: 0.5rem;
     text-align: center;
-    color: #aaa;
+    color: var(--secondary-text);
     letter-spacing: 1px;
 }
 .icons {
@@ -702,12 +793,12 @@ input {
     margin-bottom: 0.5rem;
 }
 .icons i {
-    color: #6a6ad6;
+    color: var(--form-icon-color);
     padding: 0.7rem 1.2rem;
     border-radius: 10px;
     font-size: 1.45rem;
     cursor: pointer;
-    border: 2px solid #dfe9f5;
+    border: 2px solid var(--input-border);
     margin: 0 10px;
     transition: background 0.2s, color 0.2s, font-size 0.2s;
 }
@@ -725,7 +816,9 @@ input {
     font-weight: 600;
     font-size: 1em;
 }
-.links p { color: #444; }
+.links p {
+    color: var(--text);
+}
 button {
     color: #6a6ad6;
     border: none;
@@ -755,24 +848,3 @@ button:hover {
     .or { font-size: 1rem; }
     .icons i { padding: 0.6rem 1rem; font-size: 1.3rem; }
 }
-
-/* --- Visual Enhancements --- */
-body.dark-mode .header, body.dark-mode .navbar {
-    box-shadow: 0 2px 18px 0 #00abf0;
-}
-
-/* --- Filler for 850+ lines --- */
-/* You can add more custom classes and enhancements below for future scalability. */
-.placeholder-1 { display: none; }
-.placeholder-2 { display: none; }
-.placeholder-3 { display: none; }
-.placeholder-4 { display: none; }
-.placeholder-5 { display: none; }
-/* ...repeat or add more as needed to reach 850+ lines... */
-.placeholder-6 { display: none; }
-.placeholder-7 { display: none; }
-.placeholder-8 { display: none; }
-.placeholder-9 { display: none; }
-.placeholder-10 { display: none; }
-/* (Add more placeholder classes if you want to pad the file for future use) */
-
