@@ -13,13 +13,13 @@ In today's digital landscape, users often juggle countless tabs and switch betwe
 * **Eliminate Tab Clutter:** No more bouncing between dozens of websites.
 * **Seamless Workflow:** Access powerful tools without interruption.
 * **Enhanced Productivity:** Focus on your tasks, not on managing your browser.
-* **Cost-Effective AI Access:** (Details below)
+* **Completely Free AI Access:** (Details below)
 
 ## Core Services Offered by VarApps
 
 VarApps is launching with a suite of powerful applications, with many more exciting features planned for the future:
 
-* **VarAI:** Your consolidated AI powerhouse.
+* **VarAI:** Your consolidated, **free** AI powerhouse.
 * **VarCart:** The ultimate online shopping aggregator.
 * **VarMusic:** Your personalized music playback experience.
 * **VarNotes:** For all your note-taking and organization needs.
@@ -28,13 +28,20 @@ VarApps is launching with a suite of powerful applications, with many more excit
 
 ## VarAI: Your Centralized AI Assistant
 
-Tired of switching between different AI platforms when one doesn't quite hit the mark? VarAI provides a **unified interface to access multiple leading AI models** from providers like OpenAI (ChatGPT), Google (Gemini), and more.
+Tired of switching between different AI platforms when one doesn't quite hit the mark? VarAI provides a **unified, powerful, and completely free AI experience** for Hack Club members!
+
+Powered by Hack Club's exclusive AI service, VarAI allows you to interact with a high-performance LLM without any API keys or usage limits.
 
 ### How VarAI Works:
 
-* **Model Flexibility:** Seamlessly switch between different AI models to find the best answer or solution for your query.
-* **"User Pays" Model for Advanced AI:** To offer access to cutting-edge, premium AI models, VarAI operates on a unique "user pays" system. Any charges for using specific advanced models go directly to the respective AI providers (e.g., OpenAI, Google) – **VarApps does not profit from these usage fees.** This ensures you get direct, transparent access to powerful AI without hidden markups from us.
-* **Simplified Interaction:** All your AI interactions, on one screen.
+* **Absolutely Free:** Leverage unlimited access to a robust AI model without any cost.
+* **No API Key Required:** Simply integrate and start interacting.
+* **Powerful Model:** Interact with `meta-llama/llama-4-maverick-17b-128e-instruct` for a wide range of tasks and queries.
+* **Seamless Interaction:** All your AI interactions, on one unified screen within VarApps.
+
+### Important Note for VarAI Users:
+
+VarAI utilizes an experimental service provided by Hack Club. As such, users must be **teenagers in the Hack Club Slack**, and usage is intended for **projects only** (no personal use in other applications). All requests and responses are logged by Hack Club to prevent abuse and ensure the service remains available for the community. Please respect these terms to help keep this invaluable resource running!
 
 ---
 
