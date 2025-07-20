@@ -12,6 +12,7 @@
 
 /* --- Theme Variables --- */
 :root {
+    /* Light mode variables (default since it's the first set) */
     --bg: #f6f8fa;
     --text: #222;
     --card: #fff;
@@ -28,7 +29,13 @@
     --box-shadow-medium: rgba(60,60,100,0.13);
     --box-shadow-hover: rgba(60,60,100,0.18);
     --header-mobile-bg: #fff;
+
+    /* Chatbot specific colors for light mode (default) if they differ from general theme */
+    --chatbot-ai-message-bg-light: #e2e8f0; /* Slightly darker than card for AI message bubbles */
+    --chatbot-text-light: #2d3748; /* Darker text for chatbot messages in light mode */
 }
+
+/* Explicit light-mode (for clarity, though :root is effectively light-mode by default) */
 body.light-mode {
     --bg: #f6f8fa;
     --text: #222;
@@ -45,11 +52,18 @@ body.light-mode {
     --box-shadow-medium: rgba(60,60,100,0.13);
     --box-shadow-hover: rgba(60,60,100,0.18);
     --header-mobile-bg: #fff;
+
+    /* Chatbot specific overrides for light mode */
+    --chatbot-ai-message-light: #e2e8f0;
+    --chatbot-text-light: #2d3748; /* Ensuring dark text for contrast */
 }
+
+/* Dark mode overrides */
 body.dark-mode {
     --bg: #081b29;
     --text: #ededed;
     --card: #112e42;
+    --accent: #00abf0; /* Assuming accent stays the same */
     --navbar-bg: #112e42;
     --secondary-text: #a0a0a0;
     --price-color: #4CAF50;
@@ -62,7 +76,12 @@ body.dark-mode {
     --box-shadow-medium: rgba(0,0,0,0.18);
     --box-shadow-hover: rgba(0,0,0,0.25);
     --header-mobile-bg: #112e42;
+
+    /* Chatbot specific overrides for dark mode */
+    --chatbot-ai-message-bg-dark: #2d3748; /* Darker than default card for contrast */
+    --chatbot-text-dark: #e2e8f0; /* Lighter text for contrast */
 }
+
 body {
     background: var(--bg);
     color: var(--text);
@@ -87,7 +106,7 @@ body {
 }
 body.dark-mode .header,
 body.dark-mode .navbar {
-    box-shadow: 0 2px 18px 0 #00abf0;
+    box-shadow: 0 2px 18px 0 #00abf0; /* This seems to be a hardcoded blue glow, not a variable */
 }
 
 .logo {
@@ -96,18 +115,16 @@ body.dark-mode .navbar {
     text-decoration: none;
     font-weight: 600;
 }
-/* Ensure nav-links are always a row by default */
 .nav-links {
-    display: flex; /* Make it a flex container */
-    align-items: center; /* Align items vertically */
-    gap: 24px; /* Spacing between nav items, adjusted from margin-left */
+    display: flex;
+    align-items: center;
+    gap: 24px;
 }
 .navbar a, .nav-links a {
     font-size: 17px;
     color: var(--text);
     text-decoration: none;
     font-weight: 500;
-    /* margin-left: 24px; Removed as gap on parent takes over */
     padding: 6px 12px;
     border-radius: 6px;
     transition: background 0.2s, color 0.2s;
@@ -180,7 +197,6 @@ body.dark-mode .navbar {
     .header, .navbar {
         padding: 16px 4vw;
     }
-    /* Removed .nav-links gap here as it's handled by default flex properties */
 }
 @media (max-width: 700px) {
     .nav-toggle-label {
@@ -192,7 +208,7 @@ body.dark-mode .navbar {
         top: 60px;
         right: 4vw;
         background: var(--header-mobile-bg);
-        flex-direction: column; /* This is where it becomes top-down for mobile */
+        flex-direction: column;
         align-items: flex-start;
         width: 170px;
         padding: 18px 0 18px 18px;
@@ -203,11 +219,11 @@ body.dark-mode .navbar {
         transform: translateY(-10px);
         transition: opacity 0.3s, transform 0.3s;
         z-index: 150;
-        gap: 0; /* Remove gap for vertical layout */
+        gap: 0;
     }
     .navbar .nav-links a,
     .nav-links a {
-        margin: 10px 0; /* Provide vertical spacing */
+        margin: 10px 0;
         font-size: 16px;
         width: 100%;
         padding: 6px 0;
@@ -252,22 +268,19 @@ body.dark-mode .navbar {
 }
 
 /* --- Content Spacing below fixed Navbar --- */
-/* Add top margin to main content containers based on navbar height */
 .main-content,
 .hero-row,
 .cart-list,
-.product-detail { /* Removed .container from here as auth-bg handles it */
+.product-detail {
     margin-top: 90px;
     position: relative;
     z-index: 1;
 }
-/* Specific adjustment for login/register container which doesn't have fixed navbar */
 body.auth-bg .container {
     margin-top: 48px;
 }
-/* Adjust general container margin if it's used on pages WITH a navbar */
-.container:not(.auth-container) { /* Assuming you don't use .container directly for main dashboard content */
-    margin-top: 90px; /* Apply this if generic .container is used right below navbar */
+.container:not(.auth-container) {
+    margin-top: 90px;
 }
 
 
@@ -357,10 +370,10 @@ body.dark-mode .hero-row {
     display: flex;
     justify-content: center;
     gap: 24px;
-    margin: 24px auto 8px auto; /* Centering for filters */
-    padding-top: 20px; /* Added padding to push filters below the navbar */
+    margin: 24px auto 8px auto;
+    padding-top: 20px;
     flex-wrap: wrap;
-    max-width: 600px; /* Constrain width to align with items-list */
+    max-width: 600px;
 }
 .filters label {
     font-weight: 500;
@@ -459,7 +472,7 @@ select:focus {
 @media (max-width: 700px) {
     .items-list { max-width: 98vw; }
     .item { padding: 14px 8vw 10px 8vw; }
-    .filters { flex-direction: column; align-items: center; gap: 10px; padding-top: 10px; } /* Smaller padding for mobile */
+    .filters { flex-direction: column; align-items: center; gap: 10px; padding-top: 10px; }
     .search-wrapper { flex-direction: column; gap: 6px; }
 }
 
@@ -682,7 +695,7 @@ form {
     text-align: center;
     padding: 1.3rem 0 0.7rem 0;
     margin-bottom: 0.4rem;
-    color: #6a6ad6;
+    color: #6a6ad6; /* Hardcoded color - consider using a variable */
     letter-spacing: 1px;
 }
 input {
@@ -690,7 +703,7 @@ input {
     width: 100%;
     background-color: transparent;
     border: none;
-    border-bottom: 1px solid #757575;
+    border-bottom: 1px solid #757575; /* Hardcoded color - consider using a variable */
     padding-left: 1.5rem;
     font-size: 15px;
 }
@@ -753,13 +766,13 @@ input {
     margin-bottom: 1rem;
 }
 .recover a {
-    color: #6a6ad6;
+    color: #6a6ad6; /* Hardcoded color - consider using a variable */
     text-decoration: none;
     font-size: 0.97em;
     transition: color 0.2s;
 }
 .recover a:hover {
-    color: #07001f;
+    color: #07001f; /* Hardcoded color - consider using a variable */
     text-decoration: underline;
 }
 .btn {
@@ -769,7 +782,7 @@ input {
     outline: none;
     border: none;
     width: 100%;
-    background: linear-gradient(90deg, #6a6ad6 60%, #8f94fb 100%);
+    background: linear-gradient(90deg, #6a6ad6 60%, #8f94fb 100%); /* Hardcoded colors - consider variables for buttons */
     color: white;
     cursor: pointer;
     font-weight: 600;
@@ -779,7 +792,7 @@ input {
     box-shadow: 0 2px 8px 0 var(--btn-shadow);
 }
 .btn:hover {
-    background: linear-gradient(90deg, #5a5ad6 60%, #6a6ad6 100%);
+    background: linear-gradient(90deg, #5a5ad6 60%, #6a6ad6 100%); /* Hardcoded colors */
 }
 .or {
     font-size: 1.08rem;
@@ -803,10 +816,10 @@ input {
     transition: background 0.2s, color 0.2s, font-size 0.2s;
 }
 .icons i:hover {
-    background: #6a6ad6;
+    background: #6a6ad6; /* Hardcoded color */
     color: #fff;
     font-size: 1.6rem;
-    border: 2px solid #6a6ad6;
+    border: 2px solid #6a6ad6; /* Hardcoded color */
 }
 .links {
     display: flex;
@@ -819,8 +832,8 @@ input {
 .links p {
     color: var(--text);
 }
-button {
-    color: #6a6ad6;
+button { /* This applies to all buttons, including theme-toggle and send button if not overridden */
+    color: #6a6ad6; /* Hardcoded color - might conflict with other buttons */
     border: none;
     background-color: transparent;
     font-size: 1em;
@@ -830,7 +843,7 @@ button {
 }
 button:hover {
     text-decoration: underline;
-    color: #07001f;
+    color: #07001f; /* Hardcoded color */
 }
 @media (max-width: 600px) {
     .container {
@@ -847,4 +860,262 @@ button:hover {
     .btn { font-size: 1rem; padding: 9px 0; }
     .or { font-size: 1rem; }
     .icons i { padding: 0.6rem 1rem; font-size: 1.3rem; }
+}
+
+/* --- VarAI Chatbot Specific Styles --- */
+/* These styles are for the chatbot only and use the defined variables */
+body {
+    /* Ensure body for chatbot container is centered vertically */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.chat-container {
+    max-width: 600px;
+    width: 90%;
+    margin: 20px auto;
+    background-color: var(--card); /* Uses main --card variable */
+    border-radius: 8px;
+    box-shadow: 0 0 10px var(--box-shadow-medium);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 400px;
+    max-height: 80vh;
+    /* Transition for theme changes affecting this container */
+    transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.chat-header {
+    background-color: var(--navbar-bg); /* Uses main --navbar-bg variable */
+    padding: 15px;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: center;
+    border-bottom: 1px solid var(--input-border);
+    color: var(--text); /* Uses main --text variable */
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.chat-messages {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+    background-color: var(--bg); /* Uses main --bg variable */
+    display: flex;
+    flex-direction: column;
+    transition: background-color 0.2s;
+}
+
+.message {
+    margin-bottom: 15px;
+    padding: 10px 15px;
+    border-radius: 18px;
+    max-width: 80%;
+    word-wrap: break-word;
+    line-height: 1.4;
+    white-space: pre-wrap; /* Preserve whitespace and line breaks for code */
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    /* Added transition for message background and text color on theme change */
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.message-content-wrapper {
+    width: 100%;
+    box-sizing: border-box;
+    /* Inherit color from parent message, ensuring it uses var(--text) for AI */
+    color: inherit;
+}
+
+/* User Message Specifics */
+.message.user {
+    background-color: var(--accent); /* Uses main --accent variable */
+    color: #fff; /* White text on accent background */
+    align-self: flex-end;
+    margin-left: auto;
+}
+
+/* AI Message Specifics - CRITICAL FOR CONTRAST */
+.message.ai {
+    /* Light Mode: use --chatbot-ai-message-bg-light and --chatbot-text-light */
+    /* Dark Mode: use --input-bg-focus and --text (default from :root / body.dark-mode) */
+    background-color: var(--input-bg-focus); /* Default to global, overridden below for light mode */
+    color: var(--text); /* Default to global, overridden below for light mode */
+    align-self: flex-start;
+    margin-right: auto;
+}
+
+/* Specific overrides for AI message in LIGHT MODE for contrast */
+body.light-mode .message.ai {
+    background-color: var(--chatbot-ai-message-light); /* Uses the slightly darker light-mode specific AI message background */
+    color: var(--chatbot-text-light); /* Uses the darker text for AI messages in light mode */
+}
+/* Ensure dark mode AI messages still look good (using existing global vars) */
+body.dark-mode .message.ai {
+    background-color: var(--input-bg-focus); /* Should be #0d283c from dark-mode vars */
+    color: var(--text); /* Should be #ededed from dark-mode vars */
+}
+
+
+/* Code Blocks within AI messages */
+.message.ai pre {
+    background-color: var(--bg); /* Uses main --bg variable for code block background */
+    border: 1px solid var(--input-border);
+    border-radius: 5px;
+    padding: 10px;
+    overflow-x: auto;
+    font-size: 0.9em;
+    margin: 10px 0;
+    font-family: 'Outfit', monospace; /* Ensure code font */
+    color: inherit; /* Inherit text color from parent message */
+}
+.message.ai code {
+    font-family: 'Outfit', monospace;
+}
+
+/* Specific Prism.js overrides for dark mode (assuming default Prism theme is dark) */
+body:not(.light-mode) .message.ai pre { /* Applies only when light-mode class is NOT present */
+    background-color: #0d283c; /* A slightly darker shade for code in default/dark mode */
+    border-color: #2c4d6a;
+}
+/* Ensure Prism text color is appropriate for the background */
+.token.comment, .token.prolog, .token.doctype, .token.cdata,
+.token.punctuation, .token.operator, .token.url, .token.tag,
+.token.boolean, .token.number, .token.constant, .token.symbol,
+.token.deleted, .token.property, .token.selector, .token.atrule,
+.token.attr-value, .token.string, .token.char, .token.builtin,
+.token.inserted, .token.regex, .token.important, .token.variable {
+    color: inherit; /* Let the message text color dictate for general tokens */
+}
+
+
+/* Chat Input Area */
+.chat-input {
+    display: flex;
+    padding: 15px;
+    border-top: 1px solid var(--input-border);
+    background-color: var(--navbar-bg); /* Uses main --navbar-bg variable */
+    align-items: flex-end;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+/* Chat Input Textarea */
+.chat-input textarea {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid var(--input-border); /* Uses main --input-border variable */
+    border-radius: 5px;
+    margin-right: 10px;
+    resize: none;
+    min-height: 40px;
+    max-height: 120px;
+    box-sizing: border-box;
+    background-color: var(--card); /* Uses main --card variable */
+    color: var(--text); /* Uses main --text variable */
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+.chat-input textarea:focus {
+    outline: none;
+    border-color: var(--input-focus-border); /* Uses main --input-focus-border variable */
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+/* Chat Input Send Button */
+.chat-input button { /* Specific override for chatbot send button */
+    padding: 10px 20px;
+    background-color: var(--accent); /* Uses main --accent variable */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    height: 40px;
+    box-sizing: border-box;
+}
+.chat-input button:hover {
+    background-color: #008bbd; /* Slightly darker accent on hover */
+}
+.chat-input button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+/* --- Copy Button Styling --- */
+.copy-button {
+    background-color: var(--secondary-text); /* Uses main --secondary-text variable */
+    color: white; /* White text on this button for contrast */
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 0.75em;
+    cursor: pointer;
+    margin-top: 8px;
+    opacity: 0;
+    transition: opacity 0.3s ease, background-color 0.3s ease;
+    align-self: flex-end;
+    white-space: nowrap;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+.message:hover .copy-button {
+    opacity: 1;
+}
+.copy-button:hover {
+    filter: brightness(1.2); /* Slightly brighter on hover */
+}
+/* Ensure copy button has good contrast in light mode with its darker --secondary-text */
+body.light-mode .copy-button {
+    background-color: var(--secondary-text); /* Will be #718096 in light mode */
+    color: white; /* Still white text on the darker secondary-text background */
+}
+body.light-mode .copy-button:hover {
+    background-color: #5a6b7d; /* Slightly darker on hover for light mode */
+}
+
+/* Error message styling */
+.error-message {
+    background-color: #ffe0e0; /* Light red background */
+    color: #d32f2f; /* Dark red text */
+    border: 1px solid #d32f2f;
+    padding: 10px 15px;
+    margin-top: 15px;
+    border-radius: 8px;
+    font-weight: 500;
+    text-align: center;
+}
+.error-message.hide {
+    display: none;
+}
+
+/* Optional: Style for disabled input/button if not already handled */
+#user-input:disabled {
+    background-color: #f0f0f0; /* Light grey when disabled */
+    cursor: not-allowed;
+}
+#send-button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+body.dark-mode #user-input:disabled {
+    background-color: #2d3748;
+}
+
+/* Media queries for general layout adjustments if needed, ensure they are at the end */
+@media (max-width: 600px) {
+    /* Chatbot specific media query adjustments if necessary */
+    .chat-container {
+        width: 95%; /* Adjust width for smaller screens */
+        margin: 10px auto;
+        max-height: 90vh; /* Allow more height on small screens */
+    }
+    .chat-messages {
+        padding: 10px;
+    }
+    .message {
+        padding: 8px 12px;
+        margin-bottom: 10px;
+    }
 }

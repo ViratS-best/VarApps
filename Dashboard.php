@@ -36,7 +36,7 @@ $cart_count = isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0;
     <nav class="navbar">
         <a href="Dashboard.php" class="logo">VarCart</a>
         <div class="nav-links">
-            <a href="index.php">Home</a>
+            <a href="index.html">Home</a>
             <a href="Dashboard.php">Shop</a>
             <button id="theme-toggle" class="theme-toggle">🌙 Dark/Light</button>
             <a href="cart.php" class="cart-icon">
@@ -44,6 +44,7 @@ $cart_count = isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0;
                 <span class="cart-icon-count"><?php echo $cart_count; ?></span>
             </a>
             <a href="logout.php" class="logout-btn">Logout</a>
+            <a href="proper.php" class="logout-btn">Dashboard</a>
         </div>
     </nav>
     <div class="main-content">

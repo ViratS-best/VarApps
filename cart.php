@@ -24,7 +24,8 @@ function findProduct($id, $data) {
 </head>
 <body>
     <div class="cart-list">
-        <h2>Your Cart</h2>
+        <h2>Your Cart <br>
+             **FAKE DATA! You cannot actually buy anything...**</h2>
         <?php if (empty($cart)): ?>
             <div class="empty">Your cart is empty.</div>
         <?php else: ?>

@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $mail->SMTPSecure = 'tls';
         $mail->Port = 587;
 
-        $mail->setFrom('viratsuper6@gmail.com', 'VarCart');
+        $mail->setFrom('viratsuper6@gmail.com', 'VarApps');
         $mail->addAddress($email);
 
         $mail->Subject = 'Your Password Reset Code';
