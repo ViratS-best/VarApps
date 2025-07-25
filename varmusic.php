@@ -460,11 +460,11 @@ function spotifySearch($query, $type, $accessToken) {
             <?php if (isset($_SESSION['spotify_access_token'])): ?>
                 <p class="user-status">Logged in to Spotify as: <?php echo htmlspecialchars($_SESSION['spotify_user_display_name'] ?? 'User'); ?></p>
                 <?php else: ?>
-                <a href="?action=login" class="spotify-login-btn">
+                <!-- <a href="?action=login" class="spotify-login-btn">
                     <img src="https://storage.googleapis.com/pr-newsroom-wp/1/2023/05/Spotify_Primary_Logo_RGB_Green.png" alt="Spotify Logo">
                     Login with Spotify
-                </a>
-                <p class="user-status">Log in to play full songs (Premium required).</p>
+                </a> -->
+                <!-- <p class="user-status">Log in to play full songs (Premium required).</p> -->
             <?php endif; ?>
         </div>
 
